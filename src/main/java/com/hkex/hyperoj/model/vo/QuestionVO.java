@@ -100,7 +100,7 @@ public class QuestionVO implements Serializable {
         if(tagList != null){
             question.setTags(JSONUtil.toJsonStr(tagList));
         }
-        String config = questionVO.getJudgeConfig();
+        JudgeConfig config = questionVO.getJudgeConfig();
         if(config != null){
             question.setJudgeConfig(JSONUtil.toJsonStr(config));
         }

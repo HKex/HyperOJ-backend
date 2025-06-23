@@ -9,17 +9,17 @@ import lombok.Data;
 public class JudgeInfo {
 
     /**
-     * 时间限制(ms)
+     * 程序执行信息
      */
-    private Long timeLimit;
+    private String message;
 
     /**
-     * 空间限制(kb)
+     * 消耗时间(ms)
      */
-    private Long memoryLimit;
+    private Long time;
 
     /**
-     * 栈空间限制(kb)
+     * 消耗空间(kb)
      */
-    private Long stackLimit;
+    private Long memory;
 }
