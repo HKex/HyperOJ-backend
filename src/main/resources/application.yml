@@ -103,3 +103,7 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.hkex.hyperoj.controller
+
+#代码沙箱配置
+codesandbox:
+  type: example

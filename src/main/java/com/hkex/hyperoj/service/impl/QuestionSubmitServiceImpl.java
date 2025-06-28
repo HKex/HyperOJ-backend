@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hkex.hyperoj.common.ErrorCode;
 import com.hkex.hyperoj.constant.CommonConstant;
 import com.hkex.hyperoj.exception.BusinessException;
+import com.hkex.hyperoj.judge.JudgeService;
 import com.hkex.hyperoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.hkex.hyperoj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.hkex.hyperoj.model.entity.Question;
@@ -22,10 +23,12 @@ import com.hkex.hyperoj.service.UserService;
 import com.hkex.hyperoj.utils.SqlUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +45,10 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
 
     @Resource
     private UserService userService;
+
+    @Resource
+    @Lazy
+    private JudgeService judgeService;
 
     /**
      * 提交题目
@@ -79,7 +86,12 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         if (!result) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "数据输入失败");
         }
-        return questionSubmit.getId();
+        Long id = questionSubmit.getId();
+        //执行判题服务
+        CompletableFuture.runAsync(() ->{
+            judgeService.doJudge(id);
+        });
+        return id;
     }
 
     /**

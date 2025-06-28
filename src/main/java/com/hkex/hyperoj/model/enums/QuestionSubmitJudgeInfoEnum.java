@@ -15,7 +15,7 @@ public enum QuestionSubmitJudgeInfoEnum {
 
     ACCEPTED("成功", "ACCEPTED"),
 
-    WRONG("判题中", "WRONG"),
+    WRONG_ANSWER("答案错误", "WRONG_ANSWER"),
 
     COMPLIED_ERROR("编译错误", "COMPLIED_ERROR"),
 
