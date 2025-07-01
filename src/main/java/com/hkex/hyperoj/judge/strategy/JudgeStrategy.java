@@ -1,6 +1,6 @@
 package com.hkex.hyperoj.judge.strategy;
 
-import com.hkex.hyperoj.model.dto.question.JudgeInfo;
+import com.hkex.hyperoj.judge.codesandbox.model.JudgeInfo;
 
 /**
  * 评测策略

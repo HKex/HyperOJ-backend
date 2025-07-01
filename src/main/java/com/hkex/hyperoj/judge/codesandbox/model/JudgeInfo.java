@@ -1,4 +1,4 @@
-package com.hkex.hyperoj.model.dto.question;
+package com.hkex.hyperoj.judge.codesandbox.model;
 
 import lombok.Data;
 

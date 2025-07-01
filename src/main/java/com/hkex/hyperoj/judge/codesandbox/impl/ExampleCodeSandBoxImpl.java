@@ -3,7 +3,7 @@ package com.hkex.hyperoj.judge.codesandbox.impl;
 import com.hkex.hyperoj.judge.codesandbox.CodeSandBox;
 import com.hkex.hyperoj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.hkex.hyperoj.judge.codesandbox.model.ExecuteCodeResponse;
-import com.hkex.hyperoj.model.dto.question.JudgeInfo;
+import com.hkex.hyperoj.judge.codesandbox.model.JudgeInfo;
 import com.hkex.hyperoj.model.enums.QuestionSubmitJudgeInfoEnum;
 import com.hkex.hyperoj.model.enums.QuestionSubmitStatusEnum;
 

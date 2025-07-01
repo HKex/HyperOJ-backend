@@ -10,7 +10,7 @@ import com.hkex.hyperoj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.hkex.hyperoj.judge.codesandbox.model.ExecuteCodeResponse;
 import com.hkex.hyperoj.judge.strategy.JudgeContext;
 import com.hkex.hyperoj.model.dto.question.JudgeCase;
-import com.hkex.hyperoj.model.dto.question.JudgeInfo;
+import com.hkex.hyperoj.judge.codesandbox.model.JudgeInfo;
 import com.hkex.hyperoj.model.entity.Question;
 import com.hkex.hyperoj.model.entity.QuestionSubmit;
 import com.hkex.hyperoj.model.enums.QuestionSubmitStatusEnum;

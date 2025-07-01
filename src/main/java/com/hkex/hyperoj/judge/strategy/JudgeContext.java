@@ -1,7 +1,7 @@
 package com.hkex.hyperoj.judge.strategy;
 
 import com.hkex.hyperoj.model.dto.question.JudgeCase;
-import com.hkex.hyperoj.model.dto.question.JudgeInfo;
+import com.hkex.hyperoj.judge.codesandbox.model.JudgeInfo;
 import com.hkex.hyperoj.model.entity.Question;
 import com.hkex.hyperoj.model.entity.QuestionSubmit;
 import lombok.Data;

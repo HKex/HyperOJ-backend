@@ -3,16 +3,13 @@ package com.hkex.hyperoj.model.vo;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.hkex.hyperoj.model.dto.question.JudgeInfo;
-import com.hkex.hyperoj.model.dto.questionsubmit.JudgeConfig;
-import com.hkex.hyperoj.model.entity.Question;
+import com.hkex.hyperoj.judge.codesandbox.model.JudgeInfo;
 import com.hkex.hyperoj.model.entity.QuestionSubmit;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 题目VO

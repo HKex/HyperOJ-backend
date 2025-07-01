@@ -1,6 +1,5 @@
 package com.hkex.hyperoj.judge.codesandbox.model;
 
-import com.hkex.hyperoj.model.dto.question.JudgeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
