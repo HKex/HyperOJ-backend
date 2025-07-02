@@ -24,16 +24,23 @@ class CodeSandBoxTest {
 
     @Test
     void executeCode() {
-        String type = "thirdParty";
+        System.out.println(type);
         CodeSandBox codeSandBox = CodeSandBoxFactory.newInstance(type);
         String Language = QuestionSubmitLanguageEnum.JAVA.getValue();
         List<String> inputs = Arrays.asList("1 2", "3 4");
         ExecuteCodeRequest request = ExecuteCodeRequest.builder()
-                .code("int main(){}")
+                .code("public class Main {\n" +
+                        "    public static void main(String[] args) {\n" +
+                        "        int a = Integer.parseInt(args[0]);\n" +
+                        "        int b = Integer.parseInt(args[1]);\n" +
+                        "        System.out.println(\"结果:\" + (a + b));\n" +
+                        "    }\n" +
+                        "}")
                 .language(Language)
                 .inputList(inputs)
                 .build();
         ExecuteCodeResponse executeCodeResponse = codeSandBox.executeCode(request);
+        System.out.println(executeCodeResponse);
     }
 
     @Test
