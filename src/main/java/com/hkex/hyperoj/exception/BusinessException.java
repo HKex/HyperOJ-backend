@@ -5,8 +5,7 @@ import com.hkex.hyperoj.common.ErrorCode;
 /**
  * 自定义异常类
  *
- * @author <a href="https://github.com/lihkex">程序员鱼皮</a>
- * @from <a href="https://hkex.icu">编程导航知识星球</a>
+  *@author HKex
  */
 public class BusinessException extends RuntimeException {
 

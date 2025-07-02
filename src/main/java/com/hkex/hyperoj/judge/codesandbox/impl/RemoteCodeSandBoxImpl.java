@@ -1,6 +1,5 @@
 package com.hkex.hyperoj.judge.codesandbox.impl;
 
-import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.hkex.hyperoj.common.ErrorCode;
@@ -9,7 +8,6 @@ import com.hkex.hyperoj.judge.codesandbox.CodeSandBox;
 import com.hkex.hyperoj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.hkex.hyperoj.judge.codesandbox.model.ExecuteCodeResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.HttpClient;
 
 /**
  * 远程代码沙箱（实际使用）

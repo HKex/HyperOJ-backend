@@ -5,8 +5,7 @@ import com.hkex.hyperoj.common.ErrorCode;
 /**
  * 抛异常工具类
  *
- * @author <a href="https://github.com/lihkex">程序员鱼皮</a>
- * @from <a href="https://hkex.icu">编程导航知识星球</a>
+  *@author HKex
  */
 public class ThrowUtils {
 

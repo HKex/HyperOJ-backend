@@ -7,8 +7,7 @@ import lombok.Data;
 /**
  * 已登录用户视图（脱敏）
  *
- * @author <a href="https://github.com/lihkex">程序员鱼皮</a>
- * @from <a href="https://hkex.icu">编程导航知识星球</a>
+  *@author HKex
  **/
 @Data
 public class LoginUserVO implements Serializable {
