@@ -46,17 +46,17 @@ public class JavaJudgeStrategy implements JudgeStrategy {
 
         //判断题目限制
         //java额外执行 10s
-        Long JAVA_EXTRA_TIME_COST = 10000L;
+//        Long JAVA_EXTRA_TIME_COST = 10000L;
         Long time = judgeInfo.getTime();
         Long memory = judgeInfo.getMemory();
         String judgeConfigstr = question.getJudgeConfig();
         JudgeConfig judgeConfig = JSONUtil.toBean(judgeConfigstr, JudgeConfig.class);
-        if ( memory > judgeConfig.getMemoryLimit()) {
+        if ( memory != null  && memory > judgeConfig.getMemoryLimit()) {
             judgeInfoEnum = QuestionSubmitJudgeInfoEnum.MEMORY_LIMIT_EXCEEDED;
             judgeInfoResponse.setMessage(judgeInfoEnum.getValue());
             return judgeInfoResponse;
         }
-        if (time - JAVA_EXTRA_TIME_COST > judgeConfig.getTimeLimit()) {
+        if (time > judgeConfig.getTimeLimit()) {
             judgeInfoEnum = QuestionSubmitJudgeInfoEnum.TIME_LIMIT_EXCEEDED;
             judgeInfoResponse.setMessage(judgeInfoEnum.getValue());
             return judgeInfoResponse;
