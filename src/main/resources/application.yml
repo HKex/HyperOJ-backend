@@ -22,32 +22,31 @@ spring:
     username: root
     password: rootpassword
   # Redis 配置
-  # todo 需替换配置，然后取消注释
-#  redis:
-#    database: 1
-#    host: localhost
-#    port: 6379
-#    timeout: 5000
-#    password: 123456
-  # Elasticsearch 配置
-  # todo 需替换配置，然后取消注释
-#  elasticsearch:
-#    uris: http://localhost:9200
-#    username: root
-#    password: 123456
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    timeout: 5000
   # 文件上传
   servlet:
     multipart:
       # 大小限制
       max-file-size: 10MB
-
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: developer
+    password: devpassword
+    virtual-host: /dev
+    publisher-confirm-type: correlated
+    publisher-returns: true
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
 server:
   address: 0.0.0.0
-  port: 8121
+  port: 8090
   servlet:
     context-path: /api
     # cookie 30 天过期

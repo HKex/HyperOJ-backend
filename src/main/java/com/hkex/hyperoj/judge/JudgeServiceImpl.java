@@ -104,4 +104,25 @@ public class JudgeServiceImpl implements JudgeService {
         QuestionSubmit questionSubmitResult = questionSubmitService.getById(questionId);
         return questionSubmitResult;
     }
+
+    @Override
+    public void handleExecuteResponse(Long questionSubmitId, ExecuteCodeResponse response) {
+        if (questionSubmitId == null || response == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "无效回调参数");
+        }
+        QuestionSubmit questionSubmit = questionSubmitService.getById(questionSubmitId);
+        if (questionSubmit == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "提交信息不存在");
+        }
+        // 依据 response 判定并更新
+        QuestionSubmit update = new QuestionSubmit();
+        update.setId(questionSubmitId);
+        // 若沙箱已给出判题信息，则直接落库
+        update.setJudgeInfo(JSONUtil.toJsonStr(response.getJudgeInfo()));
+        update.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
+        boolean ok = questionSubmitService.updateById(update);
+        if (!ok) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "更新判题结果失败");
+        }
+    }
 }

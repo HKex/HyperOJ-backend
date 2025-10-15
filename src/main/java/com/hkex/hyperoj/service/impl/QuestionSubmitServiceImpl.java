@@ -7,9 +7,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hkex.hyperoj.common.ErrorCode;
 import com.hkex.hyperoj.constant.CommonConstant;
 import com.hkex.hyperoj.exception.BusinessException;
+import com.hkex.hyperoj.config.RabbitMQConfig;
 import com.hkex.hyperoj.judge.JudgeService;
 import com.hkex.hyperoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.hkex.hyperoj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
+import com.hkex.hyperoj.judge.codesandbox.model.ExecuteCodeRequest;
+import com.hkex.hyperoj.model.dto.question.JudgeCase;
+import cn.hutool.json.JSONUtil;
 import com.hkex.hyperoj.model.entity.Question;
 import com.hkex.hyperoj.model.entity.QuestionSubmit;
 import com.hkex.hyperoj.model.entity.User;
@@ -23,12 +27,12 @@ import com.hkex.hyperoj.service.UserService;
 import com.hkex.hyperoj.utils.SqlUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -50,12 +54,15 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Lazy
     private JudgeService judgeService;
 
+    @Resource
+    private RabbitTemplate rabbitTemplate;
+
     /**
      * 提交题目
      *
-     * @param questionSubmitAddRequest
-     * @param loginUser
-     * @return
+     * @param questionSubmitAddRequest 题目提交信息
+     * @param loginUser 登录用户
+     * @return 提交题目的id
      */
     @Override
     public Long doQuestionSubmit(QuestionSubmitAddRequest questionSubmitAddRequest, User loginUser) {
@@ -87,10 +94,29 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "数据输入失败");
         }
         Long id = questionSubmit.getId();
-        //执行判题服务
-        CompletableFuture.runAsync(() ->{
-            judgeService.doJudge(id);
-        });
+//        //执行判题服务
+//        CompletableFuture.runAsync(() ->{
+//            judgeService.doJudge(id);
+//        });
+        // 构造 ExecuteCodeRequest
+        String judgeCasestr = question.getJudgeCase();
+        List<JudgeCase> judgeCaseList = JSONUtil.toList(judgeCasestr, JudgeCase.class);
+        List<String> inputs = judgeCaseList.stream().map(JudgeCase::getInput).collect(Collectors.toList());
+        ExecuteCodeRequest request = ExecuteCodeRequest.builder()
+                .code(questionSubmit.getCode())
+                .language(language)
+                .inputList(inputs)
+                .build();
+        // 携带提交ID到消息头，供沙箱回传时关联
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfig.CODE_EXECUTE_EXCHANGE,
+                RabbitMQConfig.CODE_EXECUTE_ROUTING_KEY_SUBMIT,
+                request,
+                message -> {
+                    message.getMessageProperties().setHeader("Auth", "itsmygo");
+                    return message;
+                }
+        );
         return id;
     }
 
